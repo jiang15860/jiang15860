@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!-- 个人单页网站 期末大作业 学生个人主页 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 移动端响应式适配核心配置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姜佳帆 | 个人学生主页</title>
+    <style>
+        /* 全局样式初始化 清除默认内外边距 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        /* 平滑滚动效果 点击导航自动滚动到对应区域 */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        /* ========== 导航栏样式 ========== */
+        header {
+            width: 100%;
+            height: 60px;
+            background-color: #2d3748;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+        }
+        .logo {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .nav-box a {
+            color: #cbd5e0;
+            text-decoration: none;
+            margin-left: 28px;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+        .nav-box a:hover {
+            color: #63b3ed;
+        }
+
+        /* 通用区块统一样式 */
+        section {
+            padding: 100px 5%;
+            min-height: 100vh;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            color: #2d3748;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .section-title::after {
+            content: "";
+            width: 60px;
+            height: 3px;
+            background-color: #3182ce;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -10px;
+        }
+
+        /* ========== 首页头像区域 ========== */
+        #home {
+            background: linear-gradient(135deg, #3182ce, #63b3ed);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 65px;
+            color: #3182ce;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        #home h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        #home p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 35px;
+        }
+        .go-about {
+            padding: 10px 28px;
+            border: 2px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        .go-about:hover {
+            background-color: #fff;
+            color: #3182ce;
+        }
+
+        /* ========== 个人介绍区域 ========== */
+        #about {
+            background-color: #ffffff;
+        }
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 17px;
+            color: #4a5568;
+        }
+        .about-content p {
+            margin-bottom: 16px;
+            text-indent: 2em;
+        }
+
+        /* ========== 专业技能区域 ========== */
+        #skill {
+            background-color: #f7fafc;
+        }
+        .skill-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            /* 自动适配列数，最小宽度220px */
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+        .skill-card {
+            background-color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+        }
+        .skill-card:hover {
+            transform: translateY(-6px);
+        }
+        .skill-card h3 {
+            color: #2d3748;
+            margin: 15px 0 8px;
+        }
+        .skill-card p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        /* ========== 课程项目展示区域 ========== */
+        #project {
+            background-color: #ffffff;
+        }
+        .project-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+        }
+        .project-card {
+            background-color: #f7fafc;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        .project-text {
+            padding: 22px;
+        }
+        .project-text h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .project-text p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* ========== 联系表单区域 ========== */
+        #contact {
+            background-color: #f7fafc;
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .form-item {
+            margin-bottom: 20px;
+        }
+        .form-item label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        .form-item input,
+        .form-item textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .form-item textarea {
+            resize: none;
+            height: 140px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            background-color: #3182ce;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #2b6cb0;
+        }
+
+        /* ========== 页脚区域 ========== */
+        footer {
+            height: 70px;
+            background-color: #2d3748;
+            color: #cbd5e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* ========== 移动端媒体查询适配 ========== */
+        @media (max-width: 768px) {
+            header {
+                height: 50px;
+            }
+            .nav-box a {
+                margin-left: 10px;
+                font-size: 13px;
+            }
+            #home h1 {
+                font-size: 28px;
+            }
+            section {
+                padding: 70px 4%;
+            }
+            .avatar {
+                width: 130px;
+                height: 130px;
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header>
+        <div class="logo">姜佳帆的个人主页</div>
+        <nav class="nav-box">
+            <a href="#home">首页</a>
+            <a href="#about">个人介绍</a>
+            <a href="#skill">专业技能</a>
+            <a href="#project">课程项目</a>
+            <a href="#contact">联系我</a>
+        </nav>
+    </header>
+
+    <!-- 首页头像区域 -->
+    <section id="home">
+        <div class="avatar">👨‍💻</div>
+        <h1>姜佳帆</h1>
+        <p>计算机专业 | 前端开发学习者</p>
+        <a href="#about" class="go-about">查看个人介绍</a>
+    </section>
+
+    <!-- 个人介绍区域 -->
+    <section id="about">
+        <h2 class="section-title">个人介绍</h2>
+        <div class="about-content">
+            <p>我是姜佳帆，一名计算机专业在校学生，在校系统学习前端开发、计算机基础、程序设计等相关课程，熟练掌握HTML、CSS、JavaScript等前端基础技术，能够独立完成静态单页网站的布局、样式美化与简单交互功能开发。</p>
+            <p>平时热衷于网页UI设计与静态网站开发，善于借助AI工具辅助完成代码编写、页面优化，本次期末作业由我独立完成本个人单页网站，页面实现电脑端、手机端多设备自适应，代码结构规范、注释完整，可直接部署至Gitee平台实现线上公网访问。</p>
+            <p>我的个人联系邮箱为2574802740@qq.com，未来希望持续深耕前后端开发技术，不断积累项目实战经验，提升自身编程与页面设计能力。</p>
+        </div>
+    </section>
+
+    <!-- 专业技能区域 -->
+    <section id="skill">
+        <h2 class="section-title">计算机专业技能</h2>
+        <div class="skill-container">
+            <div class="skill-card">
+                <h3>HTML + CSS</h3>
+                <p>静态页面布局、响应式网页、页面美化</p>
+            </div>
+            <div class="skill-card">
+                <h3>JavaScript</h3>
+                <p>原生交互、表单校验、页面动态效果</p>
+            </div>
+            <div class="skill-card">
+                <h3>Git / Gitee</h3>
+                <p>代码版本管理、静态网页线上部署</p>
+            </div>
+            <div class="skill-card">
+                <h3>AI辅助开发</h3>
+                <p>UI设计参考、代码生成、BUG调试优化</p>
+            </div>
+            <div class="skill-card">
+                <h3>Java基础</h3>
+                <p>面向对象编程、基础语法逻辑训练</p>
+            </div>
+            <div class="skill-card">
+                <h3>计算机基础</h3>
+                <p>操作系统、计算机网络、数据库基础</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程项目展示区域 -->
+    <section id="project">
+        <h2 class="section-title">课程项目展示</h2>
+        <div class="project-container">
+            <div class="project-card">
+                <div class="project-text">
+                    <h3>个人静态单页网站</h3>
+                    <p>本次期末大作业，简约响应式个人主页，原生前端技术开发，支持平滑滚动、多端适配，可一键部署上线。</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-text">
+                    <h3>网页在线计算器</h3>
+                    <p>原生JS开发网页计算器，实现加减乘除、清零、小数点运算功能，布局简洁，交互流畅。</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-text">
+                    <h3>自动图片轮播页面</h3>
+                    <p>纯JavaScript实现自动轮播、手动切换上一张下一张，常用于网站首页banner展示。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系表单区域 -->
+    <section id="contact">
+        <h2 class="section-title">联系表单</h2>
+        <form class="contact-form" id="contactForm">
+            <div class="form-item">
+                <label for="username">你的姓名</label>
+                <input type="text" id="username" placeholder="请输入姓名" required>
+            </div>
+            <div class="form-item">
+                <label for="userEmail">电子邮箱</label>
+                <input type="email" id="userEmail" placeholder="请输入邮箱地址" value="2574802740@qq.com" required>
+            </div>
+            <div class="form-item">
+                <label for="userMsg">留言内容</label>
+                <textarea id="userMsg" placeholder="请输入你想要留言的内容" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">提交留言</button>
+        </form>
+    </section>
+
+    <!-- 页脚版权信息 -->
+    <footer>
+        <p>© 2026 姜佳帆 个人学生主页 前端期末大作业 | 版权所有</p>
+    </footer>
+
+    <!-- 原生JS交互代码 带详细注释 -->
+    <script>
+        // 获取表单DOM元素
+        const contactForm = document.getElementById('contactForm');
+
+        // 表单提交监听事件
+        contactForm.addEventListener('submit', function (e) {
+            // 阻止表单默认跳转提交行为
+            e.preventDefault();
+            // 获取表单输入内容
+            let name = document.getElementById('username').value;
+            let email = document.getElementById('userEmail').value;
+            let msg = document.getElementById('userMsg').value;
+            // 弹窗展示提交信息
+            alert(`留言提交成功！\n姓名：${name}\n邮箱：${email}\n留言内容：${msg}`);
+            // 重置表单清空输入框
+            contactForm.reset();
+        })
+
+        // 监听页面滚动，导航栏背景加深
+        window.addEventListener('scroll', function () {
+            const headerNav = document.querySelector('header');
+            if (window.scrollY > 80) {
+                headerNav.style.backgroundColor = '#1a202c';
+            } else {
+                headerNav.style.backgroundColor = '#2d3748';
+            }
+        })
+    </script>
+</body>
+</html>
